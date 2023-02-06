@@ -1,7 +1,7 @@
 const submitHandler = (e) => {
   e.preventDefault();
-  document.querySelector('.msg').textContent = "";
-  document.querySelector('#image').src = "";
+  document.querySelector(".msg").textContent = "";
+  document.querySelector("#image").src = "";
   const prompt = document.querySelector("#prompt").value;
   const size = document.querySelector("#size").value;
   if (prompt === "") {
@@ -14,7 +14,7 @@ const generateImageRequest = async (prompt, size) => {
   try {
     showSpinner();
     const response = await fetch("/openai/generateimage", {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,17 +23,16 @@ const generateImageRequest = async (prompt, size) => {
         size,
       }),
     });
-    if(!response.ok){
-        removeSpinner();
-        throw new Error("That image could not be generated");
+    if (!response.ok) {
+      removeSpinner();
+      throw new Error("That image could not be generated");
     }
     const result = await response.json();
-    console.log(result);
     const imageUrl = result.data;
-    document.querySelector('#image').src = imageUrl;
+    document.querySelector("#image").src = imageUrl;
     removeSpinner();
   } catch (error) {
-     document.querySelector('.msg').textContent = error;
+    document.querySelector(".msg").textContent = error;
   }
 };
 
